@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour
-{    
+{    
     //Object Var: 
     public GameObject originWaypoint; 
     public GameObject CC7;
@@ -65,7 +65,7 @@ public class GameControl : MonoBehaviour
         CC7.gameObject.SetActive(false);
         CC12.gameObject.SetActive(false);
         CC22.gameObject.SetActive(false);
-        CC33.gameObject.SetActive(false);
+        CC33.gameObject.SetActive(false);
     }
 
     //Update is called once per frame
@@ -259,32 +259,60 @@ public class GameControl : MonoBehaviour
     //Winning Statements For Player 1- 
         if (validWinP1 == true && (player1.GetComponent<FollowThePath>().waypointIndex == 21 || player1.GetComponent<FollowThePath>().waypointIndex == 32 || player1.GetComponent<FollowThePath>().waypointIndex == 43)){
             player1.GetComponent<FollowThePath>().moveAllowed = false;
+            player2.GetComponent<FollowThePath>().moveAllowed = false;
             player1WinText.gameObject.SetActive(true);
-            player1MoveText.gameObject.SetActive(false);
-            player2MoveText.gameObject.SetActive(false);
-            Throw.moText.gameObject.SetActive(false);
-            Throw.doText.gameObject.SetActive(false);
-            Throw.gaeText.gameObject.SetActive(false);
-            Throw.geolText.gameObject.SetActive(false);
-            Throw.yutText.gameObject.SetActive(false);
             gameOver = true;
-            winPanel.gameObject.SetActive(true);
+            Win();
+            Reset();
+
         }
     //Winning Statements For Player - 
          if (validWinP2 == true && (player2.GetComponent<FollowThePath>().waypointIndex == 21 || player2.GetComponent<FollowThePath>().waypointIndex == 32 || player2.GetComponent<FollowThePath>().waypointIndex == 43)){
+            player1.GetComponent<FollowThePath>().moveAllowed = false;
             player2.GetComponent<FollowThePath>().moveAllowed = false;
             player2WinText.gameObject.SetActive(true);
-            player1MoveText.gameObject.SetActive(false);
-            player2MoveText.gameObject.SetActive(false);
-            Throw.moText.gameObject.SetActive(false);
-            Throw.doText.gameObject.SetActive(false);
-            Throw.gaeText.gameObject.SetActive(false);
-            Throw.geolText.gameObject.SetActive(false);
-            Throw.yutText.gameObject.SetActive(false);
             gameOver = true;
-            winPanel.gameObject.SetActive(true);
+            Win();
+            Reset();
         }
         
+    }
+    
+    //Win Commands - 
+    public void Win(){
+        player1MoveText.gameObject.SetActive(false);
+        player2MoveText.gameObject.SetActive(false);
+        Throw.moText.gameObject.SetActive(false);
+        Throw.doText.gameObject.SetActive(false);
+        Throw.gaeText.gameObject.SetActive(false);
+        Throw.geolText.gameObject.SetActive(false);
+        Throw.yutText.gameObject.SetActive(false);
+        winPanel.gameObject.SetActive(true);
+    }
+
+    //Game Over Reset Commands - 
+    public void Reset (){
+        gameOver = false;
+        player1.transform.position = originWaypoint.transform.position; 
+        player2.transform.position = originWaypoint.transform.position; 
+        player1.GetComponent<FollowThePath>().waypointIndex = 1;
+        player2.GetComponent<FollowThePath>().waypointIndex = 1;
+        player1StartWaypoint = 0;
+        player2StartWaypoint = 0; 
+        perMovePositionP1 = 0;
+        perMovePositionP2 = 0;
+        stickSideThrown = 0;            
+        rightCorner1 = true;
+        rightCorner2 = true;
+        leftCorner1 = true;
+        leftCorner2 = true;
+        rightPathP1 = false;
+        rightPathP2 = false;
+        leftPathP1 = false;
+        leftPathP2 = false; 
+        validWinP1 = false;
+        validWinP2 = false;
+        UltimateStick.whosTurn = 1;
     }
     
     //Switch Movement Function - 
